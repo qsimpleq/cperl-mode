@@ -82,97 +82,94 @@
 (defvar vc-sccs-header)
 
 (eval-when-compile
-      (condition-case nil
-	  (require 'custom)
-	(error nil))
-      (condition-case nil
-	  (require 'man)
-	(error nil))
-      (defvar cperl-can-font-lock
-	(or (featurep 'xemacs)
-	    (and (boundp 'emacs-major-version)
-		 (or window-system
-		     (> emacs-major-version 20)))))
-      (if cperl-can-font-lock
-	  (require 'font-lock))
-      (defvar msb-menu-cond)
-      (defvar gud-perldb-history)
-      (defvar font-lock-background-mode) ; not in Emacs
-      (defvar font-lock-display-type)	; ditto
-      (defvar paren-backwards-message)	; Not in newer XEmacs?
-      (or (fboundp 'defgroup)
-	  (defmacro defgroup (name val doc &rest arr)
-	    nil))
-      (or (fboundp 'custom-declare-variable)
-	  (defmacro defcustom (name val doc &rest arr)
-	    `(defvar ,name ,val ,doc)))
-      (or (and (fboundp 'custom-declare-variable)
-	       (string< "19.31" emacs-version))	;  Checked with 19.30: defface does not work
-	  (defmacro defface (&rest arr)
-	    nil))
-      ;; Avoid warning (tmp definitions)
-      (or (fboundp 'x-color-defined-p)
-	  (defmacro x-color-defined-p (col)
-	    (cond ((fboundp 'color-defined-p) `(color-defined-p ,col))
-		  ;; XEmacs >= 19.12
-		  ((fboundp 'valid-color-name-p) `(valid-color-name-p ,col))
-		  ;; XEmacs 19.11
-		  ((fboundp 'x-valid-color-name-p) `(x-valid-color-name-p ,col))
-		  (t '(error "Cannot implement color-defined-p")))))
-      (defmacro cperl-is-face (arg)	; Takes quoted arg
-	(cond ((fboundp 'find-face)
-	       `(find-face ,arg))
-	      (;;(and (fboundp 'face-list)
-	       ;;	(face-list))
-	       (fboundp 'face-list)
-	       `(member ,arg (and (fboundp 'face-list)
-                                  (face-list))))
-	      (t
-	       `(boundp ,arg))))
-      (defmacro cperl-make-face (arg descr) ; Takes unquoted arg
-	(cond ((fboundp 'make-face)
-	       `(make-face (quote ,arg)))
-	      (t
-	       `(defvar ,arg (quote ,arg) ,descr))))
-      (defmacro cperl-force-face (arg descr) ; Takes unquoted arg
-	`(progn
-	     (or (cperl-is-face (quote ,arg))
-		 (cperl-make-face ,arg ,descr))
-	     (or (boundp (quote ,arg)) ; We use unquoted variants too
-		 (defvar ,arg (quote ,arg) ,descr))))
-      (if (featurep 'xemacs)
-	  (defmacro cperl-etags-snarf-tag (file line)
-	    `(progn
-               (beginning-of-line 2)
-               (list ,file ,line)))
-	(defmacro cperl-etags-snarf-tag (file line)
-	  `(etags-snarf-tag)))
-      (if (featurep 'xemacs)
-	  (defmacro cperl-etags-goto-tag-location (elt)
-	    ;;(progn
-            ;; (switch-to-buffer (get-file-buffer (elt ,elt 0)))
-            ;; (set-buffer (get-file-buffer (elt ,elt 0)))
-            ;; Probably will not work due to some save-excursion???
-            ;; Or save-file-position?
-            ;; (message "Did I get to line %s?" (elt ,elt 1))
-            `(goto-line (string-to-int (elt ,elt 1))))
-	;;)
-	(defmacro cperl-etags-goto-tag-location (elt)
-	  `(etags-goto-tag-location ,elt))))
+  (require 'custom nil :noerror)
+  (require 'man nil :noerror)
+  (require 'ps-print)
+  (defvar cperl-can-font-lock
+    (or (featurep 'xemacs)
+        (and (boundp 'emacs-major-version)
+             (or window-system
+                 (> emacs-major-version 20)))))
+  (if cperl-can-font-lock
+      (require 'font-lock))
+  (defvar msb-menu-cond)
+  (defvar gud-perldb-history)
+  (defvar font-lock-background-mode) ; not in Emacs
+  (defvar font-lock-display-type)   ; ditto
+  (defvar paren-backwards-message)  ; Not in newer XEmacs?
+  (or (fboundp 'defgroup)
+      (defmacro defgroup (name val doc &rest arr)
+        nil))
+  (or (fboundp 'custom-declare-variable)
+      (defmacro defcustom (name val doc &rest arr)
+        `(defvar ,name ,val ,doc)))
+  (or (and (fboundp 'custom-declare-variable)
+           (string< "19.31" emacs-version)) ;  Checked with 19.30: defface does not work
+      (defmacro defface (&rest arr)
+        nil))
+  ;; Avoid warning (tmp definitions)
+  (or (fboundp 'x-color-defined-p)
+      (defmacro x-color-defined-p (col)
+        (cond ((fboundp 'color-defined-p) `(color-defined-p ,col))
+              ;; XEmacs >= 19.12
+              ((fboundp 'valid-color-name-p) `(valid-color-name-p ,col))
+              ;; XEmacs 19.11
+              ((fboundp 'x-valid-color-name-p) `(x-valid-color-name-p ,col))
+              (t '(error "Cannot implement color-defined-p")))))
+  (defmacro cperl-is-face (arg) ; Takes quoted arg
+    (cond ((fboundp 'find-face)
+           `(find-face ,arg))
+          (;;(and (fboundp 'face-list)
+           ;;   (face-list))
+           (fboundp 'face-list)
+           `(member ,arg (and (fboundp 'face-list)
+                              (face-list))))
+          (t
+           `(boundp ,arg))))
+  (defmacro cperl-make-face (arg descr) ; Takes unquoted arg
+    (cond ((fboundp 'make-face)
+           `(make-face (quote ,arg)))
+          (t
+           `(defvar ,arg (quote ,arg) ,descr))))
+  (defmacro cperl-force-face (arg descr) ; Takes unquoted arg
+    `(progn
+       (or (cperl-is-face (quote ,arg))
+           (cperl-make-face ,arg ,descr))
+       (or (boundp (quote ,arg)) ; We use unquoted variants too
+           (defvar ,arg (quote ,arg) ,descr))))
+  (if (featurep 'xemacs)
+      (defmacro cperl-etags-snarf-tag (file line)
+        `(progn
+           (beginning-of-line 2)
+           (list ,file ,line)))
+    (defmacro cperl-etags-snarf-tag (file line)
+      `(etags-snarf-tag)))
+  (if (featurep 'xemacs)
+      (defmacro cperl-etags-goto-tag-location (elt)
+        ;;(progn
+        ;; (switch-to-buffer (get-file-buffer (elt ,elt 0)))
+        ;; (set-buffer (get-file-buffer (elt ,elt 0)))
+        ;; Probably will not work due to some save-excursion???
+        ;; Or save-file-position?
+        ;; (message "Did I get to line %s?" (elt ,elt 1))
+        `(goto-line (string-to-int (elt ,elt 1))))
+    ;;)
+    (defmacro cperl-etags-goto-tag-location (elt)
+      `(etags-goto-tag-location ,elt))))
 
 (defvar cperl-can-font-lock
   (or (featurep 'xemacs)
       (and (boundp 'emacs-major-version)
-	   (or window-system
-	       (> emacs-major-version 20)))))
+       (or window-system
+           (> emacs-major-version 20)))))
 
 (defun cperl-choose-color (&rest list)
   (let (answer)
     (while list
       (or answer
-	  (if (or (x-color-defined-p (car list))
-		  (null (cdr list)))
-	      (setq answer (car list))))
+      (if (or (x-color-defined-p (car list))
+          (null (cdr list)))
+          (setq answer (car list))))
       (setq list (cdr list)))
     answer))
 
