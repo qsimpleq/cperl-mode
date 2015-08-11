@@ -1208,13 +1208,12 @@ versions of Emacs."
 		      ;;(concat (char-to-string help-char) "v") ; does not work
 		      'cperl-get-help
 		      [(control c) (control h) v]))
-  (if (and (featurep 'xemacs)
-	   (<= emacs-minor-version 11) (<= emacs-major-version 19))
-      (progn
-	;; substitute-key-definition is usefulness-deenhanced...
-	;;;;;(cperl-define-key "\M-q" 'cperl-fill-paragraph)
+  (cond ((and (featurep 'xemacs)
+              (<= emacs-minor-version 11)
+              (<= emacs-major-version 19))
 	(cperl-define-key "\e;" 'cperl-indent-for-comment)
 	(cperl-define-key "\e\C-\\" 'cperl-indent-region))
+        (t
     (or (boundp 'fill-paragraph-function)
 	(substitute-key-definition
 	 'fill-paragraph 'cperl-fill-paragraph
