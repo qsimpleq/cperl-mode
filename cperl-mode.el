@@ -1876,7 +1876,7 @@ or as help on variables `cperl-tips', `cperl-problems',
 	(make-local-variable 'cperl-syntax-done-to)
 	(setq cperl-syntax-done-to nil)	; reset syntaxification cache
 	(make-local-variable 'font-lock-syntactic-keywords)
-	(setq font-lock-syntactic-keywords
+    (setq syntax-propertize-function
 	      (if cperl-syntaxify-by-font-lock
 		  '((cperl-fontify-syntaxically))
                 ;; unless font-lock-syntactic-keywords, font-lock (pre-22.1)
