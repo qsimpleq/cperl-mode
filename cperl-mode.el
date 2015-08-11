@@ -6854,6 +6854,12 @@ by CPerl."
 	(make-local-variable 'parse-sexp-lookup-properties)
 	;; Do not introduce variable if not needed, we check it!
 	(set 'parse-sexp-lookup-properties t))))
+(defun cperl--imenu-name-and-position ()
+  (save-excursion
+    (forward-sexp -1)
+    (let ((beg (if imenu-use-markers (point-marker) (point)))
+          (end (progn (forward-sexp) (point))))
+      (cons (buffer-substring beg end) beg))))
 
 (defun cperl-xsub-scan ()
   (require 'imenu)
@@ -6863,35 +6869,35 @@ by CPerl."
     ;; Search for the function
     (progn ;;save-match-data
       (while (re-search-forward
-	      "^\\([ \t]*MODULE\\>[^\n]*\\<PACKAGE[ \t]*=[ \t]*\\([a-zA-Z_][a-zA-Z_0-9:]*\\)\\>\\|\\([a-zA-Z_][a-zA-Z_0-9]*\\)(\\|[ \t]*BOOT:\\)"
-	      nil t)
-	(cond
-	 ((match-beginning 2)		; SECTION
-	  (setq package (buffer-substring (match-beginning 2) (match-end 2)))
-	  (goto-char (match-beginning 0))
-	  (skip-chars-forward " \t")
-	  (forward-char 1)
-	  (if (looking-at "[^\n]*\\<PREFIX[ \t]*=[ \t]*\\([a-zA-Z_][a-zA-Z_0-9]*\\)\\>")
-	      (setq prefix (buffer-substring (match-beginning 1) (match-end 1)))
-	    (setq prefix nil)))
-	 ((not package) nil)		; C language section
-	 ((match-beginning 3)		; XSUB
-	  (goto-char (1+ (match-beginning 3)))
-	  (setq index (imenu-example--name-and-position))
-	  (setq name (buffer-substring (match-beginning 3) (match-end 3)))
-	  (if (and prefix (string-match (concat "^" prefix) name))
-	      (setq name (substring name (length prefix))))
-	  (cond ((string-match "::" name) nil)
-		(t
-		 (setq index1 (cons (concat package "::" name) (cdr index)))
-		 (push index1 index-alist)))
-	  (setcar index name)
-	  (push index index-alist))
-	 (t				; BOOT: section
-	  ;; (beginning-of-line)
-	  (setq index (imenu-example--name-and-position))
-	  (setcar index (concat package "::BOOT:"))
-	  (push index index-alist)))))
+              "^\\([ \t]*MODULE\\>[^\n]*\\<PACKAGE[ \t]*=[ \t]*\\([a-zA-Z_][a-zA-Z_0-9:]*\\)\\>\\|\\([a-zA-Z_][a-zA-Z_0-9]*\\)(\\|[ \t]*BOOT:\\)"
+              nil t)
+        (cond
+         ((match-beginning 2)       ; SECTION
+          (setq package (buffer-substring (match-beginning 2) (match-end 2)))
+          (goto-char (match-beginning 0))
+          (skip-chars-forward " \t")
+          (forward-char 1)
+          (if (looking-at "[^\n]*\\<PREFIX[ \t]*=[ \t]*\\([a-zA-Z_][a-zA-Z_0-9]*\\)\\>")
+              (setq prefix (buffer-substring (match-beginning 1) (match-end 1)))
+            (setq prefix nil)))
+         ((not package) nil)        ; C language section
+         ((match-beginning 3)       ; XSUB
+          (goto-char (1+ (match-beginning 3)))
+          (setq index (cperl--imenu-name-and-position))
+          (setq name (buffer-substring (match-beginning 3) (match-end 3)))
+          (if (and prefix (string-match (concat "^" prefix) name))
+              (setq name (substring name (length prefix))))
+          (cond ((string-match "::" name) nil)
+                (t
+                 (setq index1 (cons (concat package "::" name) (cdr index)))
+                 (push index1 index-alist)))
+          (setcar index name)
+          (push index index-alist))
+         (t             ; BOOT: section
+          ;; (beginning-of-line)
+          (setq index (cperl--imenu-name-and-position))
+          (setcar index (concat package "::BOOT:"))
+          (push index index-alist)))))
     index-alist))
 
 (defvar cperl-unreadable-ok nil)
