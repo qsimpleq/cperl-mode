@@ -49,7 +49,7 @@
 
 ;; DO NOT FORGET to read micro-docs (available from `Perl' menu)   <<<<<<
 ;; or as help on variables `cperl-tips', `cperl-problems',         <<<<<<
-;; `cperl-praise', `cperl-speed'.				   <<<<<<
+;; `cperl-praise', `cperl-speed'.                                  <<<<<<
 
 ;; The mode information (on C-h m) provides some customization help.
 ;; If you use font-lock feature of this mode, it is advisable to use
@@ -1228,7 +1228,7 @@ versions of Emacs."
           'indent-for-comment 'cperl-indent-for-comment
           cperl-mode-map global-map))))
 
-        (defvar cperl-menu)
+(defvar cperl-menu)
 (defvar cperl-lazy-installed)
 (defvar cperl-old-style nil)
 (condition-case nil
