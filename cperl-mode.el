@@ -1917,8 +1917,8 @@ or as help on variables `cperl-tips', `cperl-problems',
        (cperl-msb-fix))
   (if (featurep 'easymenu)
       (easy-menu-add cperl-menu))   ; A NOP in Emacs.
-  (run-mode-hooks 'cperl-mode-hook)
   (run-hooks 'prog-mode-hook)
+  (run-mode-hooks 'cperl-mode-hook)
   (if cperl-hook-after-change
       (add-hook 'after-change-functions 'cperl-after-change-function nil t))
   ;; After hooks since fontification will break this
