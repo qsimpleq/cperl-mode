@@ -1226,9 +1226,9 @@ versions of Emacs."
           cperl-mode-map global-map)
          (substitute-key-definition
           'indent-for-comment 'cperl-indent-for-comment
-          cperl-mode-map global-map))
+          cperl-mode-map global-map))))
 
-        (defvar cperl-menu)))
+        (defvar cperl-menu)
 (defvar cperl-lazy-installed)
 (defvar cperl-old-style nil)
 (condition-case nil
