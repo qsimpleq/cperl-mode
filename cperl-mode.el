@@ -5683,160 +5683,160 @@ indentation and initial hashes.  Behaves usually outside of comment."
          "redo" "return" "local" "exec"
                  "do" "dump"
                  "use" "our"
-         "require" "package" "eval" "my" "state"
+		 "require" "package" "eval" "evalbytes" "my" "state"
                  "BEGIN" "END" "CHECK" "INIT" "UNITCHECK"))
-           "\\|")           ; Flow control
-          "\\)\\>") 2)      ; was "\\)[ \n\t;():,\|&]"
-                    ; In what follows we use `type' style
-                    ; for overwritable builtins
-        (list
-         (concat
-          "\\(^\\|[^$@%&\\]\\)\\<\\("
-          ;; "CORE" "__FILE__" "__LINE__" "abs" "accept" "alarm"
-          ;; "and" "atan2" "bind" "binmode" "bless" "caller"
-          ;; "chdir" "chmod" "chown" "chr" "chroot" "close"
-          ;; "closedir" "cmp" "connect" "continue" "cos" "crypt"
-          ;; "dbmclose" "dbmopen" "die" "dump" "endgrent"
-          ;; "endhostent" "endnetent" "endprotoent" "endpwent"
-          ;; "endservent" "eof" "eq" "exec" "exit" "exp" "fcntl"
-          ;; "fileno" "flock" "fork" "formline" "ge" "getc"
-          ;; "getgrent" "getgrgid" "getgrnam" "gethostbyaddr"
-          ;; "gethostbyname" "gethostent" "getlogin"
-          ;; "getnetbyaddr" "getnetbyname" "getnetent"
-          ;; "getpeername" "getpgrp" "getppid" "getpriority"
-          ;; "getprotobyname" "getprotobynumber" "getprotoent"
-          ;; "getpwent" "getpwnam" "getpwuid" "getservbyname"
-          ;; "getservbyport" "getservent" "getsockname"
-          ;; "getsockopt" "glob" "gmtime" "gt" "hex" "index" "int"
-          ;; "ioctl" "join" "kill" "lc" "lcfirst" "le" "length"
-          ;; "link" "listen" "localtime" "lock" "log" "lstat" "lt"
-          ;; "mkdir" "msgctl" "msgget" "msgrcv" "msgsnd" "ne"
-          ;; "not" "oct" "open" "opendir" "or" "ord" "pack" "pipe"
-          ;; "quotemeta" "rand" "read" "readdir" "readline"
-          ;; "readlink" "readpipe" "recv" "ref" "rename" "require"
-          ;; "reset" "reverse" "rewinddir" "rindex" "rmdir" "seek"
-          ;; "seekdir" "select" "semctl" "semget" "semop" "send"
-          ;; "setgrent" "sethostent" "setnetent" "setpgrp"
-          ;; "setpriority" "setprotoent" "setpwent" "setservent"
-          ;; "setsockopt" "shmctl" "shmget" "shmread" "shmwrite"
-          ;; "shutdown" "sin" "sleep" "socket" "socketpair"
-          ;; "sprintf" "sqrt" "srand" "stat" "substr" "symlink"
-          ;; "syscall" "sysopen" "sysread" "system" "syswrite" "tell"
-          ;; "telldir" "time" "times" "truncate" "uc" "ucfirst"
-          ;; "umask" "unlink" "unpack" "utime" "values" "vec"
-          ;; "wait" "waitpid" "wantarray" "warn" "write" "x" "xor"
-          "a\\(bs\\|ccept\\|tan2\\|larm\\|nd\\)\\|"
-          "b\\(in\\(d\\|mode\\)\\|less\\)\\|"
-          "c\\(h\\(r\\(\\|oot\\)\\|dir\\|mod\\|own\\)\\|aller\\|rypt\\|"
-          "lose\\(\\|dir\\)\\|mp\\|o\\(s\\|n\\(tinue\\|nect\\)\\)\\)\\|"
-          "CORE\\|d\\(ie\\|bm\\(close\\|open\\)\\|ump\\)\\|"
-          "e\\(x\\(p\\|it\\|ec\\)\\|q\\|nd\\(p\\(rotoent\\|went\\)\\|"
-          "hostent\\|servent\\|netent\\|grent\\)\\|of\\)\\|"
-          "f\\(ileno\\|cntl\\|lock\\|or\\(k\\|mline\\)\\)\\|"
-          "g\\(t\\|lob\\|mtime\\|e\\(\\|t\\(p\\(pid\\|r\\(iority\\|"
-          "oto\\(byn\\(ame\\|umber\\)\\|ent\\)\\)\\|eername\\|w"
-          "\\(uid\\|ent\\|nam\\)\\|grp\\)\\|host\\(by\\(addr\\|name\\)\\|"
-          "ent\\)\\|s\\(erv\\(by\\(port\\|name\\)\\|ent\\)\\|"
-          "ock\\(name\\|opt\\)\\)\\|c\\|login\\|net\\(by\\(addr\\|name\\)\\|"
-          "ent\\)\\|gr\\(ent\\|nam\\|gid\\)\\)\\)\\)\\|"
-          "hex\\|i\\(n\\(t\\|dex\\)\\|octl\\)\\|join\\|kill\\|"
-          "l\\(i\\(sten\\|nk\\)\\|stat\\|c\\(\\|first\\)\\|t\\|e"
-          "\\(\\|ngth\\)\\|o\\(c\\(altime\\|k\\)\\|g\\)\\)\\|m\\(sg\\(rcv\\|snd\\|"
-          "ctl\\|get\\)\\|kdir\\)\\|n\\(e\\|ot\\)\\|o\\(pen\\(\\|dir\\)\\|"
-          "r\\(\\|d\\)\\|ct\\)\\|p\\(ipe\\|ack\\)\\|quotemeta\\|"
-          "r\\(index\\|and\\|mdir\\|e\\(quire\\|ad\\(pipe\\|\\|lin"
-          "\\(k\\|e\\)\\|dir\\)\\|set\\|cv\\|verse\\|f\\|winddir\\|name"
-          "\\)\\)\\|s\\(printf\\|qrt\\|rand\\|tat\\|ubstr\\|e\\(t\\(p\\(r"
-          "\\(iority\\|otoent\\)\\|went\\|grp\\)\\|hostent\\|s\\(ervent\\|"
-          "ockopt\\)\\|netent\\|grent\\)\\|ek\\(\\|dir\\)\\|lect\\|"
-          "m\\(ctl\\|op\\|get\\)\\|nd\\)\\|h\\(utdown\\|m\\(read\\|ctl\\|"
-          "write\\|get\\)\\)\\|y\\(s\\(read\\|call\\|open\\|tem\\|write\\)\\|"
-          "mlink\\)\\|in\\|leep\\|ocket\\(pair\\|\\)\\)\\|t\\(runcate\\|"
-          "ell\\(\\|dir\\)\\|ime\\(\\|s\\)\\)\\|u\\(c\\(\\|first\\)\\|"
-          "time\\|mask\\|n\\(pack\\|link\\)\\)\\|v\\(alues\\|ec\\)\\|"
-          "w\\(a\\(rn\\|it\\(pid\\|\\)\\|ntarray\\)\\|rite\\)\\|"
-          "x\\(\\|or\\)\\|__\\(FILE__\\|LINE__\\|PACKAGE__\\)"
-          "\\)\\>") 2 'font-lock-type-face)
-        ;; In what follows we use `other' style
-        ;; for nonoverwritable builtins
-        ;; Somehow 's', 'm' are not auto-generated???
-        (list
-         (concat
-          "\\(^\\|[^$@%&\\]\\)\\<\\("
-          ;; "AUTOLOAD" "BEGIN" "CHECK" "DESTROY" "END" "INIT" "UNITCHECK" "__END__" "chomp"
-          ;; "break" "chop" "default" "defined" "delete" "do" "each" "else" "elsif"
-          ;; "eval" "exists" "for" "foreach" "format" "given" "goto"
-          ;; "grep" "if" "keys" "last" "local" "map" "my" "next"
-          ;; "no" "our" "package" "pop" "pos" "print" "printf" "push"
-          ;; "q" "qq" "qw" "qx" "redo" "return" "say" "scalar" "shift"
-          ;; "sort" "splice" "split" "state" "study" "sub" "tie" "tr"
-          ;; "undef" "unless" "unshift" "untie" "until" "use"
-          ;; "when" "while" "y"
-          "AUTOLOAD\\|BEGIN\\|\\(UNIT\\)?CHECK\\|break\\|c\\(atch\\|ho\\(p\\|mp\\)\\)\\|d\\(e\\(f\\(inally\\|ault\\|ined\\)\\|lete\\)\\|"
-          "o\\)\\|DESTROY\\|e\\(ach\\|val\\|xists\\|ls\\(e\\|if\\)\\)\\|"
-          "END\\|for\\(\\|each\\|mat\\)\\|g\\(iven\\|rep\\|oto\\)\\|INIT\\|if\\|keys\\|"
-          "l\\(ast\\|ocal\\)\\|m\\(ap\\|y\\)\\|n\\(ext\\|o\\)\\|our\\|"
-          "p\\(ackage\\|rint\\(\\|f\\)\\|ush\\|o\\(p\\|s\\)\\)\\|"
-          "q\\(\\|q\\|w\\|x\\|r\\)\\|re\\(turn\\|do\\)\\|s\\(ay\\|pli\\(ce\\|t\\)\\|"
-          "calar\\|t\\(ate\\|udy\\)\\|ub\\|hift\\|ort\\)\\|t\\(ry?\\|ie\\)\\|"
-          "u\\(se\\|n\\(shift\\|ti\\(l\\|e\\)\\|def\\|less\\)\\)\\|"
-          "wh\\(en\\|ile\\)\\|y\\|__\\(END\\|DATA\\)__" ;__DATA__ added manually
-          "\\|[sm]"         ; Added manually
-          "\\)\\>") 2 'cperl-nonoverridable-face)
-        ;;      (mapconcat 'identity
-        ;;             '("#endif" "#else" "#ifdef" "#ifndef" "#if"
-        ;;               "#include" "#define" "#undef")
-        ;;             "\\|")
-        '("-[rwxoRWXOezsfdlpSbctugkTBMAC]\\>\\([ \t]+_\\>\\)?" 0
-          font-lock-function-name-face keep) ; Not very good, triggers at "[a-z]"
-        ;; This highlights declarations and definitions differenty.
-        ;; We do not try to highlight in the case of attributes:
-        ;; it is already done by `cperl-find-pods-heres'
-        (list (concat "\\<" cperl-sub-regexp
-              cperl-white-and-comment-rex ; whitespace/comments
-              "\\([^ \n\t{;()]+\\)" ; 2=name (assume non-anonymous)
-              "\\("
-                cperl-maybe-white-and-comment-rex ;whitespace/comments?
-                "([^()]*)\\)?" ; prototype
-              cperl-maybe-white-and-comment-rex ; whitespace/comments?
-              "[{;]")
-          2 (if cperl-font-lock-multiline
-            '(if (eq (char-after (cperl-1- (match-end 0))) ?\{ )
-                 'font-lock-function-name-face
-               'font-lock-variable-name-face)
-              ;; need to manually set 'multiline' for older font-locks
-              '(progn
-             (if (< 1 (count-lines (match-beginning 0)
-                           (match-end 0)))
-                 (put-text-property
-                  (+ 3 (match-beginning 0)) (match-end 0)
-                  'syntax-type 'multiline))
-             (if (eq (char-after (cperl-1- (match-end 0))) ?\{ )
-                 'font-lock-function-name-face
-               'font-lock-variable-name-face))))
-        '("\\<\\(package\\|require\\|use\\|import\\|no\\|bootstrap\\)[ \t]+\\([a-zA-z_][a-zA-z_0-9:]*\\)[ \t;]" ; require A if B;
-          2 font-lock-function-name-face)
-        '("^[ \t]*format[ \t]+\\([a-zA-z_][a-zA-z_0-9:]*\\)[ \t]*=[ \t]*$"
-          1 font-lock-function-name-face)
-        (cond ((featurep 'font-lock-extra)
-           '("\\([]}\\\\%@>*&]\\|\\$[a-zA-Z0-9_:]*\\)[ \t]*{[ \t]*\\(-?[a-zA-Z0-9_:]+\\)[ \t]*}"
-             (2 font-lock-string-face t)
-             (0 '(restart 2 t)))) ; To highlight $a{bc}{ef}
-          (font-lock-anchored
-           '("\\([]}\\\\%@>*&]\\|\\$[a-zA-Z0-9_:]*\\)[ \t]*{[ \t]*\\(-?[a-zA-Z0-9_:]+\\)[ \t]*}"
-             (2 font-lock-string-face t)
-             ("\\=[ \t]*{[ \t]*\\(-?[a-zA-Z0-9_:]+\\)[ \t]*}"
-              nil nil
-              (1 font-lock-string-face t))))
-          (t '("\\([]}\\\\%@>*&]\\|\\$[a-zA-Z0-9_:]*\\)[ \t]*{[ \t]*\\(-?[a-zA-Z0-9_:]+\\)[ \t]*}"
-               2 font-lock-string-face t)))
-        '("[\[ \t{,(]\\(-?[a-zA-Z0-9_:]+\\)[ \t]*=>" 1
-          font-lock-string-face t)
-        '("^[ \t]*\\([a-zA-Z0-9_]+[ \t]*:\\)[ \t]*\\($\\|{\\|\\<\\(until\\|while\\|for\\(each\\)?\\|do\\)\\>\\)" 1
-          font-lock-constant-face)  ; labels
-        '("\\<\\(continue\\|next\\|last\\|redo\\|break\\|goto\\)\\>[ \t]+\\([a-zA-Z0-9_:]+\\)" ; labels as targets
-          2 font-lock-constant-face)
-        ;; Uncomment to get perl-mode-like vars
+	       "\\|")			; Flow control
+	      "\\)\\>") 2)		; was "\\)[ \n\t;():,\|&]"
+					; In what follows we use `type' style
+					; for overwritable builtins
+	    (list
+	     (concat
+	      "\\(^\\|[^$@%&\\]\\)\\<\\("
+	      ;; "CORE" "__FILE__" "__LINE__" "__SUB__" "abs" "accept" "alarm"
+	      ;; "and" "atan2" "bind" "binmode" "bless" "caller"
+	      ;; "chdir" "chmod" "chown" "chr" "chroot" "close"
+	      ;; "closedir" "cmp" "connect" "continue" "cos" "crypt"
+	      ;; "dbmclose" "dbmopen" "die" "dump" "endgrent"
+	      ;; "endhostent" "endnetent" "endprotoent" "endpwent"
+	      ;; "endservent" "eof" "eq" "exec" "exit" "exp" "fc" "fcntl"
+	      ;; "fileno" "flock" "fork" "formline" "ge" "getc"
+	      ;; "getgrent" "getgrgid" "getgrnam" "gethostbyaddr"
+	      ;; "gethostbyname" "gethostent" "getlogin"
+	      ;; "getnetbyaddr" "getnetbyname" "getnetent"
+	      ;; "getpeername" "getpgrp" "getppid" "getpriority"
+	      ;; "getprotobyname" "getprotobynumber" "getprotoent"
+	      ;; "getpwent" "getpwnam" "getpwuid" "getservbyname"
+	      ;; "getservbyport" "getservent" "getsockname"
+	      ;; "getsockopt" "glob" "gmtime" "gt" "hex" "index" "int"
+	      ;; "ioctl" "join" "kill" "lc" "lcfirst" "le" "length"
+	      ;; "link" "listen" "localtime" "lock" "log" "lstat" "lt"
+	      ;; "mkdir" "msgctl" "msgget" "msgrcv" "msgsnd" "ne"
+	      ;; "not" "oct" "open" "opendir" "or" "ord" "pack" "pipe"
+	      ;; "quotemeta" "rand" "read" "readdir" "readline"
+	      ;; "readlink" "readpipe" "recv" "ref" "rename" "require"
+	      ;; "reset" "reverse" "rewinddir" "rindex" "rmdir" "seek"
+	      ;; "seekdir" "select" "semctl" "semget" "semop" "send"
+	      ;; "setgrent" "sethostent" "setnetent" "setpgrp"
+	      ;; "setpriority" "setprotoent" "setpwent" "setservent"
+	      ;; "setsockopt" "shmctl" "shmget" "shmread" "shmwrite"
+	      ;; "shutdown" "sin" "sleep" "socket" "socketpair"
+	      ;; "sprintf" "sqrt" "srand" "stat" "substr" "symlink"
+	      ;; "syscall" "sysopen" "sysread" "sysseek" "system" "syswrite" "tell"
+	      ;; "telldir" "time" "times" "truncate" "uc" "ucfirst"
+	      ;; "umask" "unlink" "unpack" "utime" "values" "vec"
+	      ;; "wait" "waitpid" "wantarray" "warn" "write" "x" "xor"
+	      "a\\(bs\\|ccept\\|tan2\\|larm\\|nd\\)\\|"
+	      "b\\(in\\(d\\|mode\\)\\|less\\)\\|"
+	      "c\\(h\\(r\\(\\|oot\\)\\|dir\\|mod\\|own\\)\\|aller\\|rypt\\|"
+	      "lose\\(\\|dir\\)\\|mp\\|o\\(s\\|n\\(tinue\\|nect\\)\\)\\)\\|"
+	      "CORE\\|d\\(ie\\|bm\\(close\\|open\\)\\|ump\\)\\|"
+	      "e\\(x\\(p\\|it\\|ec\\)\\|q\\|nd\\(p\\(rotoent\\|went\\)\\|"
+	      "hostent\\|servent\\|netent\\|grent\\)\\|of\\)\\|"
+	      "f\\(ileno\\|c\\(ntl\\)?\\|lock\\|or\\(k\\|mline\\)\\)\\|"
+	      "g\\(t\\|lob\\|mtime\\|e\\(\\|t\\(p\\(pid\\|r\\(iority\\|"
+	      "oto\\(byn\\(ame\\|umber\\)\\|ent\\)\\)\\|eername\\|w"
+	      "\\(uid\\|ent\\|nam\\)\\|grp\\)\\|host\\(by\\(addr\\|name\\)\\|"
+	      "ent\\)\\|s\\(erv\\(by\\(port\\|name\\)\\|ent\\)\\|"
+	      "ock\\(name\\|opt\\)\\)\\|c\\|login\\|net\\(by\\(addr\\|name\\)\\|"
+	      "ent\\)\\|gr\\(ent\\|nam\\|gid\\)\\)\\)\\)\\|"
+	      "hex\\|i\\(n\\(t\\|dex\\)\\|octl\\)\\|join\\|kill\\|"
+	      "l\\(i\\(sten\\|nk\\)\\|stat\\|c\\(\\|first\\)\\|t\\|e"
+	      "\\(\\|ngth\\)\\|o\\(c\\(altime\\|k\\)\\|g\\)\\)\\|m\\(sg\\(rcv\\|snd\\|"
+	      "ctl\\|get\\)\\|kdir\\)\\|n\\(e\\|ot\\)\\|o\\(pen\\(\\|dir\\)\\|"
+	      "r\\(\\|d\\)\\|ct\\)\\|p\\(ipe\\|ack\\)\\|quotemeta\\|"
+	      "r\\(index\\|and\\|mdir\\|e\\(quire\\|ad\\(pipe\\|\\|lin"
+	      "\\(k\\|e\\)\\|dir\\)\\|set\\|cv\\|verse\\|f\\|winddir\\|name"
+	      "\\)\\)\\|s\\(printf\\|qrt\\|rand\\|tat\\|ubstr\\|e\\(t\\(p\\(r"
+	      "\\(iority\\|otoent\\)\\|went\\|grp\\)\\|hostent\\|s\\(ervent\\|"
+	      "ockopt\\)\\|netent\\|grent\\)\\|ek\\(\\|dir\\)\\|lect\\|"
+	      "m\\(ctl\\|op\\|get\\)\\|nd\\)\\|h\\(utdown\\|m\\(read\\|ctl\\|"
+	      "write\\|get\\)\\)\\|y\\(s\\(read\\|call\\|open\\|tem\\|write\\|seek\\)\\|"
+	      "mlink\\)\\|in\\|leep\\|ocket\\(pair\\|\\)\\)\\|t\\(runcate\\|"
+	      "ell\\(\\|dir\\)\\|ime\\(\\|s\\)\\)\\|u\\(c\\(\\|first\\)\\|"
+	      "time\\|mask\\|n\\(pack\\|link\\)\\)\\|v\\(alues\\|ec\\)\\|"
+	      "w\\(a\\(rn\\|it\\(pid\\|\\)\\|ntarray\\)\\|rite\\)\\|"
+	      "x\\(\\|or\\)\\|__\\(FILE\\|LINE\\|PACKAGE\\|SUB\\)__"
+	      "\\)\\>") 2 'font-lock-type-face)
+	    ;; In what follows we use `other' style
+	    ;; for nonoverwritable builtins
+	    ;; Somehow 's', 'm' are not auto-generated???
+	    (list
+	     (concat
+	      "\\(^\\|[^$@%&\\]\\)\\<\\("
+	      ;; "AUTOLOAD" "BEGIN" "CHECK" "DESTROY" "END" "INIT" "UNITCHECK" "__END__" "chomp"
+	      ;; "break" "chop" "default" "defined" "delete" "do" "each" "else" "elsif"
+	      ;; "eval" "evalbytes" "exists" "for" "foreach" "format" "given" "goto"
+	      ;; "grep" "if" "keys" "last" "local" "map" "my" "next"
+	      ;; "no" "our" "package" "pop" "pos" "print" "printf" "prototype" "push"
+	      ;; "q" "qq" "qw" "qx" "redo" "return" "say" "scalar" "shift"
+	      ;; "sort" "splice" "split" "state" "study" "sub" "tie" "tr"
+	      ;; "undef" "unless" "unshift" "untie" "until" "use"
+	      ;; "when" "while" "y"
+	      "AUTOLOAD\\|BEGIN\\|\\(UNIT\\)?CHECK\\|break\\|c\\(atch\\|ho\\(p\\|mp\\)\\)\\|d\\(e\\(f\\(inally\\|ault\\|ined\\)\\|lete\\)\\|"
+	      "o\\)\\|DESTROY\\|e\\(ach\\|val\\(bytes\\)?\\|xists\\|ls\\(e\\|if\\)\\)\\|"
+	      "END\\|for\\(\\|each\\|mat\\)\\|g\\(iven\\|rep\\|oto\\)\\|INIT\\|if\\|keys\\|"
+	      "l\\(ast\\|ocal\\)\\|m\\(ap\\|y\\)\\|n\\(ext\\|o\\)\\|our\\|"
+	      "p\\(ackage\\|rototype\\|rint\\(\\|f\\)\\|ush\\|o\\(p\\|s\\)\\)\\|"
+	      "q\\(\\|q\\|w\\|x\\|r\\)\\|re\\(turn\\|do\\)\\|s\\(ay\\|pli\\(ce\\|t\\)\\|"
+	      "calar\\|t\\(ate\\|udy\\)\\|ub\\|hift\\|ort\\)\\|t\\(ry?\\|ied?\\)\\|"
+	      "u\\(se\\|n\\(shift\\|ti\\(l\\|e\\)\\|def\\|less\\)\\)\\|"
+	      "wh\\(en\\|ile\\)\\|y\\|__\\(END\\|DATA\\)__" ;__DATA__ added manually
+	      "\\|[sm]"			; Added manually
+	      "\\)\\>") 2 'cperl-nonoverridable-face)
+	    ;;		(mapconcat 'identity
+	    ;;			   '("#endif" "#else" "#ifdef" "#ifndef" "#if"
+	    ;;			     "#include" "#define" "#undef")
+	    ;;			   "\\|")
+	    '("-[rwxoRWXOezsfdlpSbctugkTBMAC]\\>\\([ \t]+_\\>\\)?" 0
+	      font-lock-function-name-face keep) ; Not very good, triggers at "[a-z]"
+	    ;; This highlights declarations and definitions differenty.
+	    ;; We do not try to highlight in the case of attributes:
+	    ;; it is already done by `cperl-find-pods-heres'
+	    (list (concat "\\<" cperl-sub-regexp
+			  cperl-white-and-comment-rex ; whitespace/comments
+			  "\\([^ \n\t{;()]+\\)" ; 2=name (assume non-anonymous)
+			  "\\("
+			    cperl-maybe-white-and-comment-rex ;whitespace/comments?
+			    "([^()]*)\\)?" ; prototype
+			  cperl-maybe-white-and-comment-rex ; whitespace/comments?
+			  "[{;]")
+		  2 (if cperl-font-lock-multiline
+			'(if (eq (char-after (cperl-1- (match-end 0))) ?\{ )
+			     'font-lock-function-name-face
+			   'font-lock-variable-name-face)
+		      ;; need to manually set 'multiline' for older font-locks
+		      '(progn
+			 (if (< 1 (count-lines (match-beginning 0)
+					       (match-end 0)))
+			     (put-text-property
+			      (+ 3 (match-beginning 0)) (match-end 0)
+			      'syntax-type 'multiline))
+			 (if (eq (char-after (cperl-1- (match-end 0))) ?\{ )
+			     'font-lock-function-name-face
+			   'font-lock-variable-name-face))))
+	    '("\\<\\(package\\|require\\|use\\|import\\|no\\|bootstrap\\)[ \t]+\\([a-zA-z_][a-zA-z_0-9:]*\\)[ \t;]" ; require A if B;
+	      2 font-lock-function-name-face)
+	    '("^[ \t]*format[ \t]+\\([a-zA-z_][a-zA-z_0-9:]*\\)[ \t]*=[ \t]*$"
+	      1 font-lock-function-name-face)
+	    (cond ((featurep 'font-lock-extra)
+		   '("\\([]}\\\\%@>*&]\\|\\$[a-zA-Z0-9_:]*\\)[ \t]*{[ \t]*\\(-?[a-zA-Z0-9_:]+\\)[ \t]*}"
+		     (2 font-lock-string-face t)
+		     (0 '(restart 2 t)))) ; To highlight $a{bc}{ef}
+		  (font-lock-anchored
+		   '("\\([]}\\\\%@>*&]\\|\\$[a-zA-Z0-9_:]*\\)[ \t]*{[ \t]*\\(-?[a-zA-Z0-9_:]+\\)[ \t]*}"
+		     (2 font-lock-string-face t)
+		     ("\\=[ \t]*{[ \t]*\\(-?[a-zA-Z0-9_:]+\\)[ \t]*}"
+		      nil nil
+		      (1 font-lock-string-face t))))
+		  (t '("\\([]}\\\\%@>*&]\\|\\$[a-zA-Z0-9_:]*\\)[ \t]*{[ \t]*\\(-?[a-zA-Z0-9_:]+\\)[ \t]*}"
+		       2 font-lock-string-face t)))
+	    '("[\[ \t{,(]\\(-?[a-zA-Z0-9_:]+\\)[ \t]*=>" 1
+	      font-lock-string-face t)
+	    '("^[ \t]*\\([a-zA-Z0-9_]+[ \t]*:\\)[ \t]*\\($\\|{\\|\\<\\(until\\|while\\|for\\(each\\)?\\|do\\)\\>\\)" 1
+	      font-lock-constant-face)	; labels
+	    '("\\<\\(continue\\|next\\|last\\|redo\\|break\\|goto\\)\\>[ \t]+\\([a-zA-Z0-9_:]+\\)" ; labels as targets
+	      2 font-lock-constant-face)
+	    ;; Uncomment to get perl-mode-like vars
             ;;; '("[$*]{?\\(\\sw+\\)" 1 font-lock-variable-name-face)
             ;;; '("\\([@%]\\|\\$#\\)\\(\\sw+\\)"
             ;;;  (2 (cons font-lock-variable-name-face '(underline))))
@@ -7772,6 +7772,7 @@ endservent
 eof[([FILEHANDLE])]
 ... eq ...  String equality.
 eval(EXPR) or eval { BLOCK }
+evalbytes   See eval.
 exec([TRUENAME] ARGV0, ARGVs)     or     exec(SHELL_COMMAND_LINE)
 exit(EXPR)
 exp(EXPR)
@@ -7941,48 +7942,50 @@ y/SEARCHLIST/REPLACEMENTLIST/
 ... | ...   Bitwise or.
 ... || ...  Logical or.
 ... // ...      Defined-or.
-~ ...       Unary bitwise complement.
-#!  OS interpreter indicator.  If contains `perl', used for options, and -x.
-AUTOLOAD {...}  Shorthand for `sub AUTOLOAD {...}'.
-CORE::      Prefix to access builtin function if imported sub obscures it.
-SUPER::     Prefix to lookup for a method in @ISA classes.
-DESTROY     Shorthand for `sub DESTROY {...}'.
-... EQ ...  Obsolete synonym of `eq'.
-... GE ...  Obsolete synonym of `ge'.
-... GT ...  Obsolete synonym of `gt'.
-... LE ...  Obsolete synonym of `le'.
-... LT ...  Obsolete synonym of `lt'.
-... NE ...  Obsolete synonym of `ne'.
-abs [ EXPR ]    absolute value
-... and ...     Low-precedence synonym for &&.
-bless REFERENCE [, PACKAGE] Makes reference into an object of a package.
-chomp [LIST]    Strips $/ off LIST/$_.  Returns count.  Special if $/ eq ''!
-chr     Converts a number to char with the same ordinal.
-else        Part of if/unless {BLOCK} elsif {BLOCK} else {BLOCK}.
-elsif       Part of if/unless {BLOCK} elsif {BLOCK} else {BLOCK}.
-exists $HASH{KEY}   True if the key exists.
-format [NAME] =  Start of output format.  Ended by a single dot (.) on a line.
-formline PICTURE, LIST  Backdoor into \"format\" processing.
-glob EXPR   Synonym of <EXPR>.
-lc [ EXPR ] Returns lowercased EXPR.
-lcfirst [ EXPR ]    Returns EXPR with lower-cased first letter.
-grep EXPR,LIST  or grep {BLOCK} LIST    Filters LIST via EXPR/BLOCK.
-map EXPR, LIST  or map {BLOCK} LIST Applies EXPR/BLOCK to elts of LIST.
+~ ...		Unary bitwise complement.
+#!	OS interpreter indicator.  If contains `perl', used for options, and -x.
+AUTOLOAD {...}	Shorthand for `sub AUTOLOAD {...}'.
+CORE::		Prefix to access builtin function if imported sub obscures it.
+SUPER::		Prefix to lookup for a method in @ISA classes.
+DESTROY		Shorthand for `sub DESTROY {...}'.
+... EQ ...	Obsolete synonym of `eq'.
+... GE ...	Obsolete synonym of `ge'.
+... GT ...	Obsolete synonym of `gt'.
+... LE ...	Obsolete synonym of `le'.
+... LT ...	Obsolete synonym of `lt'.
+... NE ...	Obsolete synonym of `ne'.
+abs [ EXPR ]	absolute value
+... and ...		Low-precedence synonym for &&.
+bless REFERENCE [, PACKAGE]	Makes reference into an object of a package.
+chomp [LIST]	Strips $/ off LIST/$_.  Returns count.  Special if $/ eq ''!
+chr		Converts a number to char with the same ordinal.
+else		Part of if/unless {BLOCK} elsif {BLOCK} else {BLOCK}.
+elsif		Part of if/unless {BLOCK} elsif {BLOCK} else {BLOCK}.
+exists $HASH{KEY}	True if the key exists.
+fc EXPR    Returns the casefolded version of EXPR.
+format [NAME] =	 Start of output format.  Ended by a single dot (.) on a line.
+formline PICTURE, LIST	Backdoor into \"format\" processing.
+glob EXPR	Synonym of <EXPR>.
+lc [ EXPR ]	Returns lowercased EXPR.
+lcfirst [ EXPR ]	Returns EXPR with lower-cased first letter.
+grep EXPR,LIST  or grep {BLOCK} LIST	Filters LIST via EXPR/BLOCK.
+map EXPR, LIST	or map {BLOCK} LIST	Applies EXPR/BLOCK to elts of LIST.
 no PACKAGE [SYMBOL1, ...]  Partial reverse for `use'.  Runs `unimport' method.
 not ...     Low-precedence synonym for ! - negation.
 ... or ...      Low-precedence synonym for ||.
 pos STRING    Set/Get end-position of the last match over this string, see \\G.
-quotemeta [ EXPR ]  Quote regexp metacharacters.
-qw/WORD1 .../       Synonym of split('', 'WORD1 ...')
-readline FH Synonym of <FH>.
-readpipe CMD    Synonym of `CMD`.
-ref [ EXPR ]    Type of EXPR when dereferenced.
-sysopen FH, FILENAME, MODE [, PERM] (MODE is numeric, see Fcntl.)
-tie VAR, PACKAGE, LIST  Hide an object behind a simple Perl variable.
-tied        Returns internal object for a tied data.
-uc [ EXPR ] Returns upcased EXPR.
-ucfirst [ EXPR ]    Returns EXPR with upcased first letter.
-untie VAR   Unlink an object from a simple Perl variable.
+prototype FUNC   Returns the prototype of a function as a string, or undef.
+quotemeta [ EXPR ]	Quote regexp metacharacters.
+qw/WORD1 .../		Synonym of split('', 'WORD1 ...')
+readline FH	Synonym of <FH>.
+readpipe CMD	Synonym of `CMD`.
+ref [ EXPR ]	Type of EXPR when dereferenced.
+sysopen FH, FILENAME, MODE [, PERM]	(MODE is numeric, see Fcntl.)
+tie VAR, PACKAGE, LIST	Hide an object behind a simple Perl variable.
+tied		Returns internal object for a tied data.
+uc [ EXPR ]	Returns upcased EXPR.
+ucfirst [ EXPR ]	Returns EXPR with upcased first letter.
+untie VAR	Unlink an object from a simple Perl variable.
 use PACKAGE [SYMBOL1, ...]  Compile-time `require' with consequent `import'.
 ... xor ...     Low-precedence synonym for exclusive or.
 prototype \\&SUB    Returns prototype of the function given a reference.
