@@ -8967,5 +8967,10 @@ do extra unwind via `cperl-unwind-to-safe'."
 
 (provide 'cperl-mode)
 
+;; Local Variables:
+;; tab-width: 8
+;; indent-tabs-mode: t
+;; End:
+
 ;; arch-tag: 42e5b19b-e187-4537-929f-1a7408980ce6
 ;;; cperl-mode.el ends here
