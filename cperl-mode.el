@@ -854,7 +854,7 @@ voice);
         b) Can lineup vertically \"middles\" of rows, like `=' in
                 a  = b;
                 cc = d;
-        c) Can insert spaces where this impoves readability (in one
+        c) Can insert spaces where this improves readability (in one
                 interactive sweep over the buffer);
         d) Has support for imenu, including:
                 1) Separate unordered list of \"interesting places\";
@@ -917,7 +917,7 @@ the settings present before the switch.
 9) When doing indentation of control constructs, may correct
 line-breaks/spacing between elements of the construct.
 
-10) Uses a linear-time algorith for indentation of regions (on Emaxen with
+10) Uses a linear-time algorithm for indentation of regions (on Emaxen with
 capable syntax engines).
 
 11) Syntax-highlight, indentation, sexp-recognition inside regular expressions.
@@ -942,8 +942,8 @@ syntax-parsing routines, and marks them up so that either
 
     A1) CPerl may work around these deficiencies (for big chunks, mostly
         PODs and HERE-documents), or
-    A2) On capable Emaxen CPerl will use improved syntax-handlings
-    which reads mark-up hints directly.
+    A2) On capable Emaxen CPerl will use improved syntax-handling
+        which reads mark-up hints directly.
 
     The scan in case A2 is much more comprehensive, thus may be slower.
 
@@ -973,7 +973,7 @@ B) Speed of editing operations.
   `cperl-array-face'            Array names
   `cperl-hash-face'         Hash names
   `font-lock-comment-face'  Comments, PODs and whatever is considered
-                syntaxically to be not code
+                syntactically to be not code
   `font-lock-constant-face' HERE-doc delimiters, labels, delimiters of
                 2-arg operators s/y/tr/ or of RExen,
   `font-lock-warning-face'  Special-cased m// and s//foo/,
@@ -985,12 +985,12 @@ B) Speed of editing operations.
   `cperl-nonoverridable-face'   Non-overridable keywords, modifiers of RExen
   `font-lock-string-face'   Strings, qw() constructs, RExen, POD sections,
                 literal parts and the terminator of formats
-                and whatever is syntaxically considered
+                and whatever is syntactically considered
                 as string literals
   `font-lock-type-face'     Overridable keywords
   `font-lock-variable-name-face' Variable declarations, indirect array and
                 hash names, POD headers/item names
-  `cperl-invalid'       Trailing whitespace
+  `cperl-invalid-face'       Trailing whitespace
 
 Note that in several situations the highlighting tries to inform about
 possible confusion, such as different colors for function names in
@@ -1289,7 +1289,7 @@ versions of Emacs."
       "----"
       ["Ispell PODs" cperl-pod-spell
        ;; Better not to update syntaxification here:
-       ;; debugging syntaxificatio can be broken by this???
+       ;; debugging syntaxification can be broken by this???
        (or
         (get-text-property (point-min) 'in-pod)
         (< (progn
@@ -1316,7 +1316,7 @@ versions of Emacs."
            (get-text-property (point) 'syntax-type))
          '(here-doc pod))]
       "----"
-      ["CPerl pretty print (exprmntl)" cperl-ps-print
+      ["CPerl pretty print (experimental)" cperl-ps-print
        (fboundp 'ps-extend-face-list)]
       "----"
       ["Syntaxify region" cperl-find-pods-heres-region
@@ -1400,12 +1400,12 @@ The expansion is entirely correct because it uses the C preprocessor."
 
 ;;; These two must be unwound, otherwise take exponential time
 (defconst cperl-maybe-white-and-comment-rex "[ \t\n]*\\(#[^\n]*\n[ \t\n]*\\)*"
-"Regular expression to match optional whitespace with interpspersed comments.
+"Regular expression to match optional whitespace with interspersed comments.
 Should contain exactly one group.")
 
 ;;; This one is tricky to unwind; still very inefficient...
 (defconst cperl-white-and-comment-rex "\\([ \t\n]\\|#[^\n]*\n\\)+"
-"Regular expression to match whitespace with interpspersed comments.
+"Regular expression to match whitespace with interspersed comments.
 Should contain exactly one group.")
 
 ;;; Is incorporated in `cperl-imenu--function-name-regexp-perl'
@@ -1534,7 +1534,7 @@ the last)."
 (defvar cperl-font-locking nil)
 
 ;; NB as it stands the code in cperl-mode assumes this only has one
-;; element. If Xemacs 19 support were dropped, this could all be simplified.
+;; element. If XEmacs 19 support were dropped, this could all be simplified.
 (defvar cperl-compilation-error-regexp-alist
   ;; This look like a paranoiac regexp: could anybody find a better one? (which WORKS).
   '(("^[^\n]* \\(file\\|at\\) \\([^ \t\n]+\\) [^\n]*line \\([0-9]+\\)[\\., \n]"
@@ -1559,8 +1559,8 @@ default.)  You can always quote (with \\[quoted-insert]) the left
 since most the time you mean \"less\".  CPerl mode tries to guess
 whether you want to type pair <>, and inserts is if it
 appropriate.  You can set `cperl-electric-parens-string' to the string that
-contains the parenths from the above list you want to be electrical.
-Electricity of parenths is controlled by `cperl-electric-parens'.
+contains the parens from the above list you want to be electrical.
+Electricity of parens is controlled by `cperl-electric-parens'.
 You may also set `cperl-electric-parens-mark' to have electric parens
 look for active mark and \"embrace\" a region if possible.'
 
@@ -1573,7 +1573,7 @@ and POD directives (Disabled by default, see `cperl-electric-keywords'.)
 
 The user types the keyword immediately followed by a space, which
 causes the construct to be expanded, and the point is positioned where
-she is most likely to want to be.  eg. when the user types a space
+she is most likely to want to be.  E.g., when the user types a space
 following \"if\" the following appears in the buffer: if () { or if ()
 } { } and the cursor is between the parentheses.  The user can then
 type some boolean expression within the parens.  Having done that,
@@ -1840,7 +1840,7 @@ or as help on variables `cperl-tips', `cperl-problems',
                (funcall f))
            (make-local-variable 'compilation-error-regexp-alist)
            (push 'cperl compilation-error-regexp-alist)))
-    ((boundp 'compilation-error-regexp-alist);; xmeacs 19.x
+    ((boundp 'compilation-error-regexp-alist);; xemacs 19.x
      (make-local-variable 'compilation-error-regexp-alist)
      (set 'compilation-error-regexp-alist
            (append cperl-compilation-error-regexp-alist
@@ -2834,7 +2834,7 @@ Will not look before LIM."
                  (skip-chars-forward " \t")
                  (if (memq (char-after (point))
                        (append "#\n" nil))
-                     nil ; Can't use intentation of this line...
+                     nil ; Can't use indentation of this line...
                    (point)))
                  (skip-chars-forward " \t")
                  (point)))
@@ -3558,7 +3558,7 @@ Works before syntax recognition is done."
 (defvar font-lock-warning-face)
 
 (defun cperl-find-sub-attrs (&optional st-l b-fname e-fname pos)
-  "Syntaxically mark (and fontify) attributes of a subroutine.
+  "Syntactically mark (and fontify) attributes of a subroutine.
 Should be called with the point before leading colon of an attribute."
   ;; Works *before* syntax recognition is done
   (or st-l (setq st-l (list nil)))  ; Avoid overwriting '()
@@ -8945,7 +8945,7 @@ do extra unwind via `cperl-unwind-to-safe'."
 ;; Called when any modification is made to buffer text.
 (defun cperl-after-change-function (beg end old-len)
   ;; We should have been informed about changes by `font-lock'.  Since it
-  ;; does not inform as which calls are defered, do it ourselves
+  ;; does not inform as which calls are deferred, do it ourselves
   (if cperl-syntax-done-to
       (setq cperl-syntax-done-to (min cperl-syntax-done-to beg))))
 
