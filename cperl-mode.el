@@ -3711,59 +3711,59 @@ the sections using `cperl-pod-head-face', `cperl-pod-face',
 	 (stop-point (if ignore-max
 			 (point-max)
 		       max))
-     (search
-      (concat
-       "\\(\\`\n?\\|^\n\\)="    ; POD
-       "\\|"
-       ;; One extra () before this:
-       "<<"             ; HERE-DOC
-       "\\("            ; 1 + 1
-       ;; First variant "BLAH" or just ``.
-       "[ \t]*"         ; Yes, whitespace is allowed!
-       "\\([\"'`]\\)"       ; 2 + 1 = 3
-       "\\([^\"'`\n]*\\)"       ; 3 + 1
-       "\\3"
-       "\\|"
-       ;; Second variant: Identifier or \ID (same as 'ID') or empty
-       "\\\\?\\(\\([a-zA-Z_][a-zA-Z_0-9]*\\)?\\)" ; 4 + 1, 5 + 1
-       ;; Do not have <<= or << 30 or <<30 or << $blah.
-       ;; "\\([^= \t0-9$@%&]\\|[ \t]+[^ \t\n0-9$@%&]\\)" ; 6 + 1
-       "\\(\\)"     ; To preserve count of pars :-( 6 + 1
-       "\\)"
-       "\\|"
-       ;; 1+6 extra () before this:
-       "^[ \t]*\\(format\\)[ \t]*\\([a-zA-Z0-9_]+\\)?[ \t]*=[ \t]*$" ;FRMAT
-       (if cperl-use-syntax-table-text-property
-	   (concat
-	"\\|"
-	;; 1+6+2=9 extra () before this:
-	"\\<\\(q[wxqr]?\\|[msy]\\|tr\\)\\>" ; QUOTED CONSTRUCT
-	"\\|"
-	;; 1+6+2+1=10 extra () before this:
-	"\\([?/<]\\)"   ; /blah/ or ?blah? or <file*glob>
-	"\\|"
-	;; 1+6+2+1+1=11 extra () before this
-	"\\<" cperl-sub-regexp "\\>" ;  sub with proto/attr
-	"\\("
-	   cperl-white-and-comment-rex
-	   "\\(::[a-zA-Z_:'0-9]*\\|[a-zA-Z_'][a-zA-Z_:'0-9]*\\)\\)?" ; name
-	"\\("
-	   cperl-maybe-white-and-comment-rex
-	   "\\(([^()]*)\\|:[^:]\\)\\)" ; prototype or attribute start
-	"\\|"
-	;; 1+6+2+1+1+6=17 extra () before this:
-	"\\$\\(['{]\\)"     ; $' or ${foo}
-	"\\|"
-	;; 1+6+2+1+1+6+1=18 extra () before this (old pack'var syntax;
-	;; we do not support intervening comments...):
-	"\\(\\<" cperl-sub-regexp "[ \t\n\f]+\\|[&*$@%]\\)[a-zA-Z0-9_]*'"
-	;; 1+6+2+1+1+6+1+1=19 extra () before this:
-	"\\|"
-	"__\\(END\\|DATA\\)__"  ; __END__ or __DATA__
-	;; 1+6+2+1+1+6+1+1+1=20 extra () before this:
-	"\\|"
-	"\\\\\\(['`\"($]\\)")   ; BACKWACKED something-hairy
-	 ""))))
+	 (search
+	  (concat
+	   "\\(\\`\n?\\|^\n\\)="	; POD
+	   "\\|"
+	   ;; One extra () before this:
+	   "<<~?"			; HERE-DOC
+	   "\\("			; 1 + 1
+	   ;; First variant "BLAH" or just ``.
+	   "[ \t]*"			; Yes, whitespace is allowed!
+	   "\\([\"'`]\\)"		; 2 + 1 = 3
+	   "\\([^\"'`\n]*\\)"		; 3 + 1
+	   "\\3"
+	   "\\|"
+	   ;; Second variant: Identifier or \ID (same as 'ID') or empty
+	   "\\\\?\\(\\([a-zA-Z_][a-zA-Z_0-9]*\\)?\\)" ; 4 + 1, 5 + 1
+	   ;; Do not have <<= or << 30 or <<30 or << $blah.
+	   ;; "\\([^= \t0-9$@%&]\\|[ \t]+[^ \t\n0-9$@%&]\\)" ; 6 + 1
+	   "\\(\\)"		; To preserve count of pars :-( 6 + 1
+	   "\\)"
+	   "\\|"
+	   ;; 1+6 extra () before this:
+	   "^[ \t]*\\(format\\)[ \t]*\\([a-zA-Z0-9_]+\\)?[ \t]*=[ \t]*$" ;FRMAT
+	   (if cperl-use-syntax-table-text-property
+	       (concat
+		"\\|"
+		;; 1+6+2=9 extra () before this:
+		"\\<\\(q[wxqr]?\\|[msy]\\|tr\\)\\>" ; QUOTED CONSTRUCT
+		"\\|"
+		;; 1+6+2+1=10 extra () before this:
+		"\\([?/<]\\)"	; /blah/ or ?blah? or <file*glob>
+		"\\|"
+		;; 1+6+2+1+1=11 extra () before this
+		"\\<" cperl-sub-regexp "\\>" ;  sub with proto/attr
+		"\\("
+		   cperl-white-and-comment-rex
+		   "\\(::[a-zA-Z_:'0-9]*\\|[a-zA-Z_'][a-zA-Z_:'0-9]*\\)\\)?" ; name
+		"\\("
+		   cperl-maybe-white-and-comment-rex
+		   "\\(([^()]*)\\|:[^:]\\)\\)" ; prototype or attribute start
+		"\\|"
+		;; 1+6+2+1+1+6=17 extra () before this:
+		"\\$\\(['{]\\)"		; $' or ${foo}
+		"\\|"
+		;; 1+6+2+1+1+6+1=18 extra () before this (old pack'var syntax;
+		;; we do not support intervening comments...):
+		"\\(\\<" cperl-sub-regexp "[ \t\n\f]+\\|[&*$@%]\\)[a-zA-Z0-9_]*'"
+		;; 1+6+2+1+1+6+1+1=19 extra () before this:
+		"\\|"
+		"__\\(END\\|DATA\\)__"	; __END__ or __DATA__
+		;; 1+6+2+1+1+6+1+1+1=20 extra () before this:
+		"\\|"
+		"\\\\\\(['`\"($]\\)")	; BACKWACKED something-hairy
+	     ""))))
     (unwind-protect
     (progn
       (save-excursion
@@ -4041,96 +4041,332 @@ the sections using `cperl-pod-head-face', `cperl-pod-face',
 	    (while (and (eq (forward-line) 0)
 		(not (looking-at "^[.;]$")))
 	      (cond
-	       ((looking-at "^#")) ; Skip comments
-	       ((and argument   ; Skip argument multi-lines
-		 (looking-at "^[ \t]*{"))
-	    (forward-sexp 1)
-	    (setq argument nil))
-	       (argument    ; Skip argument lines
-	    (setq argument nil))
-	       (t       ; Format line
-	    (setq b1 (point))
-	    (setq argument (looking-at "^[^\n]*[@^]"))
-	    (end-of-line)
-	    ;; Highlight the format line
-	    (cperl-postpone-fontification b1 (point)
-			      'face font-lock-string-face)
-	    (cperl-commentify b1 (point) nil)
-	    (cperl-put-do-not-fontify b1 (point) t))))
-	  ;; We do not search to max, since we may be called from
-	  ;; some hook of fontification, and max is random
-	  (re-search-forward "^[.;]$" stop-point 'toend))
-	(beginning-of-line)
-	(if (looking-at "^\\.$") ; ";" is not supported yet
-	    (progn
-	      ;; Highlight the ending delimiter
-	      (cperl-postpone-fontification (point) (+ (point) 2)
-			    'face font-lock-string-face)
-	      (cperl-commentify (point) (+ (point) 2) nil)
-	      (cperl-put-do-not-fontify (point) (+ (point) 2) t))
-	  (message "End of format `%s' not found." name)
-	  (or (car err-l) (setcar err-l b)))
-	(forward-line)
-	(if (> (point) max)
-	    (setq tmpend tb))
-	(put-text-property b (point) 'syntax-type 'format))
-	   ;; qq-like String or Regexp:
-	   ((or (match-beginning 10) (match-beginning 11))
-	;; 1+6+2=9 extra () before this:
-	;; "\\<\\(q[wxqr]?\\|[msy]\\|tr\\)\\>"
-	;; "\\|"
-	;; "\\([?/<]\\)"    ; /blah/ or ?blah? or <file*glob>
-	(setq b1 (if (match-beginning 10) 10 11)
-	      argument (buffer-substring
-		(match-beginning b1) (match-end b1))
-	      b (point)     ; end of qq etc
-	      i b
-	      c (char-after (match-beginning b1))
-	      bb (char-after (1- (match-beginning b1))) ; tmp holder
-	      ;; bb == "Not a stringy"
-	      bb (if (eq b1 10) ; user variables/whatever
-		 (and (memq bb (append "$@%*#_:-&>" nil)) ; $#y)
-		  (cond ((eq bb ?-) (eq c ?s)) ; -s file test
-		    ((eq bb ?\:) ; $opt::s
-		     (eq (char-after
-			  (- (match-beginning b1) 2))
-			 ?\:))
-		    ((eq bb ?\>) ; $foo->s
-		     (eq (char-after
-			  (- (match-beginning b1) 2))
-			 ?\-))
-		    ((eq bb ?\&)
-		     (not (eq (char-after ; &&m/blah/
-			   (- (match-beginning b1) 2))
-			  ?\&)))
-		    (t t)))
-	       ;; <file> or <$file>
-	       (and (eq c ?\<)
-		;; Do not stringify <FH>, <$fh> :
-		(save-match-data
-		  (looking-at
-		   "\\$?\\([_a-zA-Z:][_a-zA-Z0-9:]*\\)?>"))))
-	      tb (match-beginning 0))
-	(goto-char (match-beginning b1))
-	(cperl-backward-to-noncomment (point-min))
-	(or bb
-	    (if (eq b1 11)  ; bare /blah/ or ?blah? or <foo>
-	    (setq argument ""
-		  b1 nil
-		  bb    ; Not a regexp?
-		  (not
-		   ;; What is below: regexp-p?
-		   (and
-		(or (memq (preceding-char)
-		      (append (if (memq c '(?\? ?\<))
-			      ;; $a++ ? 1 : 2
-			      "~{(=|&*!,;:["
-			    "~{(=|&+-*!,;:[") nil))
-		    (and (eq (preceding-char) ?\})
-		     (cperl-after-block-p (point-min)))
-		    (and (eq (char-syntax (preceding-char)) ?w)
-		     (progn
-		       (forward-sexp -1)
+	       ;; 1+6+2+1+1+6=17 extra () before this:
+	       ;;    "\\$\\(['{]\\)"
+	       ((match-beginning 18) ; $' or ${foo}
+		(if (eq (preceding-char) ?\') ; $'
+		    (progn
+		      (setq b (1- (point))
+			    state (parse-partial-sexp
+				   state-point (1- b) nil nil state)
+			    state-point (1- b))
+		      (if (nth 3 state)	; in string
+			  (cperl-modify-syntax-type (1- b) cperl-st-punct))
+		      (goto-char (1+ b)))
+		  ;; else: ${
+		  (setq bb (match-beginning 0))
+		  (cperl-modify-syntax-type bb cperl-st-punct)))
+	       ;; No processing in strings/comments beyond this point:
+	       ((or (nth 3 state) (nth 4 state))
+		t)			; Do nothing in comment/string
+	       ((match-beginning 1)	; POD section
+		;;  "\\(\\`\n?\\|^\n\\)="
+		(setq b (match-beginning 0)
+		      state (parse-partial-sexp
+			     state-point b nil nil state)
+		      state-point b)
+		(if (or (nth 3 state) (nth 4 state)
+			(looking-at "\\(cut\\|\\end\\)\\>"))
+		    (if (or (nth 3 state) (nth 4 state) ignore-max)
+			nil		; Doing a chunk only
+		      (message "=cut is not preceded by a POD section")
+		      (or (car err-l) (setcar err-l (point))))
+		  (beginning-of-line)
+
+		  (setq b (point)
+			bb b
+			tb (match-beginning 0)
+			b1 nil)		; error condition
+		  ;; We do not search to max, since we may be called from
+		  ;; some hook of fontification, and max is random
+		  (or (re-search-forward "^\n=\\(cut\\|\\end\\)\\>" stop-point 'toend)
+		      (progn
+			(goto-char b)
+			(if (re-search-forward "\n=\\(cut\\|\\end\\)\\>" stop-point 'toend)
+			    (progn
+			      (message "=cut is not preceded by an empty line")
+			      (setq b1 t)
+			      (or (car err-l) (setcar err-l b))))))
+		  (beginning-of-line 2)	; An empty line after =cut is not POD!
+		  (setq e (point))
+		  (and (> e max)
+		       (progn
+			 (remove-text-properties
+			  max e '(syntax-type t in-pod t syntax-table t
+					      attrib-group t
+					      REx-interpolated t
+					      cperl-postpone t
+					      syntax-subtype t
+					      here-doc-group t
+					      rear-nonsticky t
+					      front-sticky t
+					      first-format-line t
+					      REx-part2 t
+					      indentable t))
+			 (setq tmpend tb)))
+		  (put-text-property b e 'in-pod t)
+		  (put-text-property b e 'syntax-type 'in-pod)
+		  (goto-char b)
+		  (while (re-search-forward "\n\n[ \t]" e t)
+		    ;; We start 'pod 1 char earlier to include the preceding line
+		    (beginning-of-line)
+		    (put-text-property (cperl-1- b) (point) 'syntax-type 'pod)
+		    (cperl-put-do-not-fontify b (point) t)
+		    ;; mark the non-literal parts as PODs
+		    (if cperl-pod-here-fontify
+			(cperl-postpone-fontification b (point) 'face face t))
+		    (re-search-forward "\n\n[^ \t\f\n]" e 'toend)
+		    (beginning-of-line)
+		    (setq b (point)))
+		  (put-text-property (cperl-1- (point)) e 'syntax-type 'pod)
+		  (cperl-put-do-not-fontify (point) e t)
+		  (if cperl-pod-here-fontify
+		      (progn
+			;; mark the non-literal parts as PODs
+			(cperl-postpone-fontification (point) e 'face face t)
+			(goto-char bb)
+			(if (looking-at
+			     "=[a-zA-Z0-9_]+\\>[ \t]*\\(\\(\n?[^\n]\\)+\\)$")
+			    ;; mark the headers
+			    (cperl-postpone-fontification
+			     (match-beginning 1) (match-end 1)
+			     'face head-face))
+			(while (re-search-forward
+				;; One paragraph
+				"^\n=[a-zA-Z0-9_]+\\>[ \t]*\\(\\(\n?[^\n]\\)+\\)$"
+				e 'toend)
+			  ;; mark the headers
+			  (cperl-postpone-fontification
+			   (match-beginning 1) (match-end 1)
+			   'face head-face))))
+		  (cperl-commentify bb e nil)
+		  (goto-char e)
+		  (or (eq e (point-max))
+		      (forward-char -1)))) ; Prepare for immediate POD start.
+	       ;; Here document
+	       ;; We can do many here-per-line;
+	       ;; but multiline quote on the same line as <<HERE confuses us...
+               ;; ;; One extra () before this:
+	       ;;"<<"
+	       ;;  "\\("			; 1 + 1
+	       ;;  ;; First variant "BLAH" or just ``.
+	       ;;     "[ \t]*"			; Yes, whitespace is allowed!
+	       ;;     "\\([\"'`]\\)"	; 2 + 1
+	       ;;     "\\([^\"'`\n]*\\)"	; 3 + 1
+	       ;;     "\\3"
+	       ;;  "\\|"
+	       ;;  ;; Second variant: Identifier or \ID or empty
+	       ;;    "\\\\?\\(\\([a-zA-Z_][a-zA-Z_0-9]*\\)?\\)" ; 4 + 1, 5 + 1
+	       ;;    ;; Do not have <<= or << 30 or <<30 or << $blah.
+	       ;;    ;; "\\([^= \t0-9$@%&]\\|[ \t]+[^ \t\n0-9$@%&]\\)" ; 6 + 1
+	       ;;    "\\(\\)"		; To preserve count of pars :-( 6 + 1
+	       ;;  "\\)"
+	       ((match-beginning 2)	; 1 + 1
+		(setq b (point)
+		      tb (match-beginning 0)
+		      c (and		; not HERE-DOC
+			 (match-beginning 5)
+			 (save-match-data
+			   (or (looking-at "[ \t]*(") ; << function_call()
+			       (save-excursion ; 1 << func_name, or $foo << 10
+				 (condition-case nil
+				     (progn
+				       (goto-char tb)
+	       ;;; XXX What to do: foo <<bar ???
+	       ;;; XXX Need to support print {a} <<B ???
+				       (forward-sexp -1)
+				       (save-match-data
+					; $foo << b; $f .= <<B;
+					; ($f+1) << b; a($f) . <<B;
+					; foo 1, <<B; $x{a} <<b;
+					 (cond
+					  ((looking-at "[0-9$({]")
+					   (forward-sexp 1)
+					   (and
+					    (looking-at "[ \t]*<<")
+					    (condition-case nil
+						;; print $foo <<EOF
+						(progn
+						  (forward-sexp -2)
+						  (not
+						   (looking-at "\\(printf?\\|say\\|system\\|exec\\|sort\\)\\>")))
+						(error t)))))))
+				   (error nil))) ; func(<<EOF)
+			       (and (not (match-beginning 6)) ; Empty
+				    (looking-at
+				     "[ \t]*[=0-9$@%&(]"))))))
+		(if c			; Not here-doc
+		    nil			; Skip it.
+		  (setq c (match-end 2)) ; 1 + 1
+		  (if (match-beginning 5) ;4 + 1
+		      (setq b1 (match-beginning 5) ; 4 + 1
+			    e1 (match-end 5)) ; 4 + 1
+		    (setq b1 (match-beginning 4) ; 3 + 1
+			  e1 (match-end 4))) ; 3 + 1
+		  (setq tag (buffer-substring b1 e1)
+			qtag (regexp-quote tag))
+		  (cond (cperl-pod-here-fontify
+			 ;; Highlight the starting delimiter
+			 (cperl-postpone-fontification
+			  b1 e1 'face my-cperl-delimiters-face)
+			 (cperl-put-do-not-fontify b1 e1 t)))
+		  (forward-line)
+		  (setq i (point))
+		  (if end-of-here-doc
+		      (goto-char end-of-here-doc))
+		  (setq b (point))
+		  ;; We do not search to max, since we may be called from
+		  ;; some hook of fontification, and max is random
+		  (or (and (re-search-forward (concat "^[ \t]*" qtag "$")
+					      stop-point 'toend)
+			   ;;;(eq (following-char) ?\n) ; XXXX WHY???
+			   )
+		    (progn		; Pretend we matched at the end
+		      (goto-char (point-max))
+		      (re-search-forward "\\'")
+		      (message "End of here-document `%s' not found." tag)
+		      (or (car err-l) (setcar err-l b))))
+		  (if cperl-pod-here-fontify
+		      (progn
+			;; Highlight the ending delimiter
+			(cperl-postpone-fontification
+			 (match-beginning 0) (match-end 0)
+			 'face my-cperl-delimiters-face)
+			(cperl-put-do-not-fontify b (match-end 0) t)
+			;; Highlight the HERE-DOC
+			(cperl-postpone-fontification b (match-beginning 0)
+						      'face here-face)))
+		  (setq e1 (cperl-1+ (match-end 0)))
+		  (put-text-property b (match-beginning 0)
+				     'syntax-type 'here-doc)
+		  (put-text-property (match-beginning 0) e1
+				     'syntax-type 'here-doc-delim)
+		  (put-text-property b e1 'here-doc-group t)
+		  ;; This makes insertion at the start of HERE-DOC update
+		  ;; the whole construct:
+		  (put-text-property b (cperl-1+ b) 'front-sticky '(syntax-type))
+		  (cperl-commentify b e1 nil)
+		  (cperl-put-do-not-fontify b (match-end 0) t)
+		  ;; Cache the syntax info...
+		  (setq cperl-syntax-state (cons state-point state))
+		  ;; ... and process the rest of the line...
+		  (setq overshoot
+			(elt		; non-inter ignore-max
+			 (cperl-find-pods-heres c i t end t e1) 1))
+		  (if (and overshoot (> overshoot (point)))
+		      (goto-char overshoot)
+		    (setq overshoot e1))
+		  (if (> e1 max)
+		      (setq tmpend tb))))
+	       ;; format
+	       ((match-beginning 8)
+		;; 1+6=7 extra () before this:
+		;;"^[ \t]*\\(format\\)[ \t]*\\([a-zA-Z0-9_]+\\)?[ \t]*=[ \t]*$"
+		(setq b (point)
+		      name (if (match-beginning 8) ; 7 + 1
+			       (buffer-substring (match-beginning 8) ; 7 + 1
+						 (match-end 8)) ; 7 + 1
+			     "")
+		      tb (match-beginning 0))
+		(setq argument nil)
+		(put-text-property (save-excursion
+				     (beginning-of-line)
+				     (point))
+				   b 'first-format-line 't)
+		(if cperl-pod-here-fontify
+		    (while (and (eq (forward-line) 0)
+				(not (looking-at "^[.;]$")))
+		      (cond
+		       ((looking-at "^#")) ; Skip comments
+		       ((and argument	; Skip argument multi-lines
+			     (looking-at "^[ \t]*{"))
+			(forward-sexp 1)
+			(setq argument nil))
+		       (argument	; Skip argument lines
+			(setq argument nil))
+		       (t		; Format line
+			(setq b1 (point))
+			(setq argument (looking-at "^[^\n]*[@^]"))
+			(end-of-line)
+			;; Highlight the format line
+			(cperl-postpone-fontification b1 (point)
+						      'face font-lock-string-face)
+			(cperl-commentify b1 (point) nil)
+			(cperl-put-do-not-fontify b1 (point) t))))
+		  ;; We do not search to max, since we may be called from
+		  ;; some hook of fontification, and max is random
+		  (re-search-forward "^[.;]$" stop-point 'toend))
+		(beginning-of-line)
+		(if (looking-at "^\\.$") ; ";" is not supported yet
+		    (progn
+		      ;; Highlight the ending delimiter
+		      (cperl-postpone-fontification (point) (+ (point) 2)
+						    'face font-lock-string-face)
+		      (cperl-commentify (point) (+ (point) 2) nil)
+		      (cperl-put-do-not-fontify (point) (+ (point) 2) t))
+		  (message "End of format `%s' not found." name)
+		  (or (car err-l) (setcar err-l b)))
+		(forward-line)
+		(if (> (point) max)
+		    (setq tmpend tb))
+		(put-text-property b (point) 'syntax-type 'format))
+	       ;; qq-like String or Regexp:
+	       ((or (match-beginning 10) (match-beginning 11))
+		;; 1+6+2=9 extra () before this:
+		;; "\\<\\(q[wxqr]?\\|[msy]\\|tr\\)\\>"
+		;; "\\|"
+		;; "\\([?/<]\\)"	; /blah/ or ?blah? or <file*glob>
+		(setq b1 (if (match-beginning 10) 10 11)
+		      argument (buffer-substring
+				(match-beginning b1) (match-end b1))
+		      b (point)		; end of qq etc
+		      i b
+		      c (char-after (match-beginning b1))
+		      bb (char-after (1- (match-beginning b1))) ; tmp holder
+		      ;; bb == "Not a stringy"
+		      bb (if (eq b1 10) ; user variables/whatever
+			     (and (memq bb (append "$@%*#_:-&>" nil)) ; $#y)
+				  (cond ((eq bb ?-) (eq c ?s)) ; -s file test
+					((eq bb ?\:) ; $opt::s
+					 (eq (char-after
+					      (- (match-beginning b1) 2))
+					     ?\:))
+					((eq bb ?\>) ; $foo->s
+					 (eq (char-after
+					      (- (match-beginning b1) 2))
+					     ?\-))
+					((eq bb ?\&)
+					 (not (eq (char-after ; &&m/blah/
+						   (- (match-beginning b1) 2))
+						  ?\&)))
+					(t t)))
+			   ;; <file> or <$file>
+			   (and (eq c ?\<)
+				;; Do not stringify <FH>, <$fh> :
+				(save-match-data
+				  (looking-at
+				   "\\$?\\([_a-zA-Z:][_a-zA-Z0-9:]*\\)?>"))))
+		      tb (match-beginning 0))
+		(goto-char (match-beginning b1))
+		(cperl-backward-to-noncomment (point-min))
+		(or bb
+		    (if (eq b1 11)	; bare /blah/ or ?blah? or <foo>
+			(setq argument ""
+			      b1 nil
+			      bb	; Not a regexp?
+			      (not
+			       ;; What is below: regexp-p?
+			       (and
+				(or (memq (preceding-char)
+					  (append (if (memq c '(?\? ?\<))
+						      ;; $a++ ? 1 : 2
+						      "~{(=|&*!,;:["
+						    "~{(=|&+-*!,;:[") nil))
+				    (and (eq (preceding-char) ?\})
+					 (cperl-after-block-p (point-min)))
+				    (and (eq (char-syntax (preceding-char)) ?w)
+					 (progn
+					   (forward-sexp -1)
 ;; After these keywords `/' starts a RE.  One should add all the
 ;; functions/builtins which expect an argument, but ...
 		       (if (eq (preceding-char) ?-)
@@ -8957,7 +9193,7 @@ do extra unwind via `cperl-unwind-to-safe'."
       (cperl-fontify-syntaxically to)))))
 
 (defvar cperl-version
-  (let ((v  "Revision: 5.23"))
+  (let ((v  "Revision: 6.2"))
     (string-match ":\\s *\\([0-9.]+\\)" v)
     (substring v (match-beginning 1) (match-end 1)))
   "Version of IZ-supported CPerl package this file is based on.")
