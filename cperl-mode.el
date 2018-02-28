@@ -4833,7 +4833,7 @@ statement would start; thus the block in ${func()} does not count."
 	  (save-excursion
 	    (forward-sexp -1)
 	    ;; else {}     but not    else::func {}
-	    (or (and (looking-at "\\(else\\|catch\\|try\\|continue\\|grep\\|map\\|BEGIN\\|END\\|UNITCHECK\\|CHECK\\|INIT\\)\\>")
+	    (or (and (looking-at "\\(else\\|try\\|catch\\|finally\\|continue\\|grep\\|map\\|BEGIN\\|END\\|UNITCHECK\\|CHECK\\|INIT\\)\\>")
 		 (not (looking-at "\\(\\sw\\|_\\)+::")))
 	    ;; sub f {}
 	    (progn
