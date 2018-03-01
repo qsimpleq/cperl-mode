@@ -3733,7 +3733,7 @@ the sections using `cperl-pod-head-face', `cperl-pod-face',
 	   "\\)"
 	   "\\|"
 	   ;; 1+6 extra () before this:
-	   "^[ \t]*\\(format\\)[ \t]*\\([a-zA-Z0-9_]+\\)?[ \t]*=[ \t]*$" ;FRMAT
+	   "^[ \t]*\\(format\\)[ \t]*\\([a-zA-Z0-9_]+\\)?[ \t]*=[ \t]*$" ;FORMAT
 	   (if cperl-use-syntax-table-text-property
 	       (concat
 		"\\|"
